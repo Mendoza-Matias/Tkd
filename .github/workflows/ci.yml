@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [ "develop" ]
     types: [ "opened", "reopened", "synchronize" ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,15 +26,3 @@ jobs:
 
     - name: Build with Maven
       run: ./mvnw -B package
-
-    - name: Wait commit status # reportar el estado del commit en la pull request y esperar a que se complete el job
-      uses: cloudposse/github-action-wait-commit-status@main
-      with:
-        repository: ${{ github.repository }}
-        sha: ${{ github.sha }}
-        status: continuous-delivery/example-app
-        lookup: "success"
-        token: ${{ github.token }}
-        check-timeout: 120
-        check-retry-count: 5
-        check-retry-interval: 20
