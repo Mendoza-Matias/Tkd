@@ -1,0 +1,272 @@
+openapi: 3.0.3
+info:
+  title: Tkd API
+  description: Api for tkd center, manage students, instructors, payments, etc.
+  version: 0.0.1
+  contact:
+    email: mendoza.matias@example.com
+servers:
+  - url: http://{server-url}/api/v1
+    variables:
+      server-url:
+        default: "localhost:8080"
+security:
+  - JWTBearer: []
+tags:
+  - name: Student
+  - name: Discipline
+  - name: Enrollment
+  - name: Fee
+paths:
+  /student:
+    post:
+      tags:
+        - Student
+      summary: RegisterStudent
+      operationId: registerStudent
+      description: Register a new student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/register_student_request"
+      responses:
+        "201":
+          description: Student registered successfully
+          content:
+            application/json:
+              schema:
+                type: integer
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+  /discipline:
+    get:
+      tags:
+        - Discipline
+      summary: GetAllDisciplines
+      operationId: getAllDisciplines
+      description: Get all disciplines
+      responses:
+        "200":
+          description: Disciplines retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/discpline_response"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+  /enrollment:
+    post:
+      tags:
+        - Enrollment
+      summary: RegisterNewEnrollment
+      operationId: registerEnrollment
+      description: Register a new enrollment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: integer
+      responses:
+        "201":
+          description: Student enrolled successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/enrollment_request"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+  /fee/overdue:
+    get:
+      tags:
+        - Fee
+      summary: GetOverdueFees
+      operationId: getOverdueFees
+      description: Get all overdue fees
+      responses:
+        "200":
+          description: Overdue fees retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/fee_response"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+components:
+  schemas:
+    register_student_request:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+    discpline_response:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+          format: double
+    enrollment_request:
+      type: object
+      properties:
+        student_id:
+          type: integer
+        discipline_id:
+          type: integer
+    fee_response:
+      type: object
+      properties:
+        id:
+          type: integer
+        student_name:
+          type: string
+        discipline_name:
+          type: string
+        amount:
+          type: number
+          format: double
+        status:
+          type: string
+          enum:
+            - PENDING
+            - PAID
+            - OVERDUE
+        creation_date:
+          type: string
+          format: date-time
+        due_date:
+          type: string
+          format: date-time
+    error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        description:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
