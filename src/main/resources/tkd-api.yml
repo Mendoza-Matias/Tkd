@@ -69,6 +69,51 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+    get:
+      tags:
+        - Student
+      summary: GetAllStudents
+      operationId: getAllStudents
+      description: Get all students
+      responses:
+        "200":
+          description: Students retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student_response"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
   /discipline:
     get:
       tags:
@@ -82,7 +127,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/discpline_response"
+                type: array
+                items:
+                  $ref: "#/components/schemas/discipline_response"
         "400":
           description: Bad request
           content:
@@ -117,7 +164,7 @@ paths:
     post:
       tags:
         - Enrollment
-      summary: RegisterNewEnrollment
+      summary: RegisterEnrollment
       operationId: registerEnrollment
       description: Register a new enrollment
       requestBody:
@@ -125,14 +172,14 @@ paths:
         content:
           application/json:
             schema:
-              type: integer
+              $ref: "#/components/schemas/enrollment_request"
       responses:
         "201":
           description: Student enrolled successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/enrollment_request"
+                type: integer
         "400":
           description: Bad request
           content:
@@ -452,14 +499,30 @@ components:
     register_student_request:
       type: object
       required:
-        - name
+        - full_name
         - email
+        - phone
       properties:
-        name:
+        full_name:
           type: string
         email:
           type: string
           format: email
+        phone:
+          type: string
+          minLength: 10
+    student_response:
+      type: object
+      properties:
+        id:
+          type: integer
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
     discpline_response:
       type: object
       properties:
@@ -477,6 +540,16 @@ components:
           type: integer
         discipline_id:
           type: integer
+    discipline_response:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+          format: double
     fee_response:
       type: object
       properties:
@@ -510,4 +583,4 @@ components:
           type: string
         timestamp:
           type: string
-          format: date
+          format: date-time

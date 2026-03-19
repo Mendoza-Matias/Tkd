@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 
 import com.mmendoza.tkd.core.exception.BussinesException;
 import com.mmendoza.tkd.core.model.User;
@@ -61,6 +62,7 @@ public class UserServiceImplTest {
         BussinesException exception = assertThrows(BussinesException.class,
                 () -> userServiceImpl.findByEmail(user.getEmail()));
         assertEquals("Usuario no encontrado", exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
     @Test
@@ -68,5 +70,6 @@ public class UserServiceImplTest {
         BussinesException exception = assertThrows(BussinesException.class,
                 () -> userServiceImpl.findById(user.getId()));
         assertEquals("Usuario no encontrado", exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 }

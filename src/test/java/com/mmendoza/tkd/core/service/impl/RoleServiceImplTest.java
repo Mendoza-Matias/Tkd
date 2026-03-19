@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 
 import com.mmendoza.tkd.core.exception.BussinesException;
 import com.mmendoza.tkd.core.model.Role;
@@ -47,5 +48,6 @@ public class RoleServiceImplTest {
         BussinesException exception = assertThrows(BussinesException.class,
                 () -> roleServiceImpl.findByName(role.getName()));
         assertEquals("Rol no encontrado", exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 }
