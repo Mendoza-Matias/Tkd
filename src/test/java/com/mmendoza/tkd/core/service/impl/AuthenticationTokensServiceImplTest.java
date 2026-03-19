@@ -12,10 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-<<<<<<< Updated upstream
-=======
 import org.springframework.http.HttpStatus;
->>>>>>> Stashed changes
 
 import com.mmendoza.tkd.core.exception.BussinesException;
 import com.mmendoza.tkd.core.model.AuthenticationTokens;
@@ -24,62 +21,59 @@ import com.mmendoza.tkd.core.repository.IAuthenticationTokensRepository;
 @ExtendWith(MockitoExtension.class)
 public class AuthenticationTokensServiceImplTest {
 
-    @Mock
-    private IAuthenticationTokensRepository iAuthenticationTokensRepository;
+        @Mock
+        private IAuthenticationTokensRepository iAuthenticationTokensRepository;
 
-    @InjectMocks
-    private AuthenticationTokensServiceImpl authenticationTokensServiceImpl;
+        @InjectMocks
+        private AuthenticationTokensServiceImpl authenticationTokensServiceImpl;
 
-    private AuthenticationTokens authenticationTokens;
+        private AuthenticationTokens authenticationTokens;
 
-    @BeforeEach
-    void setUp() {
-        authenticationTokens = AuthenticationTokens.builder()
-                .id(1)
-                .accessToken("jwt")
-                .refreshToken("refreshToken")
-                .build();
-    }
+        @BeforeEach
+        void setUp() {
+                authenticationTokens = AuthenticationTokens.builder()
+                                .id(1)
+                                .accessToken("jwt")
+                                .refreshToken("refreshToken")
+                                .build();
+        }
 
-    @Test
-    void shouldSave() {
-        authenticationTokensServiceImpl.save(authenticationTokens);
-    }
+        @Test
+        void shouldSave() {
+                authenticationTokensServiceImpl.save(authenticationTokens);
+        }
 
-    @Test
-    void shouldInvalidate() {
-        when(iAuthenticationTokensRepository.findByRefreshToken(authenticationTokens.getRefreshToken()))
-                .thenReturn(Optional.of(authenticationTokens));
-        authenticationTokensServiceImpl.invalidate(authenticationTokens.getRefreshToken());
-    }
+        @Test
+        void shouldInvalidate() {
+                when(iAuthenticationTokensRepository.findByRefreshToken(authenticationTokens.getRefreshToken()))
+                                .thenReturn(Optional.of(authenticationTokens));
+                authenticationTokensServiceImpl.invalidate(authenticationTokens.getRefreshToken());
+        }
 
-    @Test
-    void shouldExceptionWhenInvalidateReturnEmpty() {
-        BussinesException exception = assertThrows(BussinesException.class,
-                () -> authenticationTokensServiceImpl.invalidate(authenticationTokens.getRefreshToken()));
-        assertEquals("Token no encontrado", exception.getMessage());
-<<<<<<< Updated upstream
-=======
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
->>>>>>> Stashed changes
-    }
+        @Test
+        void shouldExceptionWhenInvalidateReturnEmpty() {
+                BussinesException exception = assertThrows(BussinesException.class,
+                                () -> authenticationTokensServiceImpl
+                                                .invalidate(authenticationTokens.getRefreshToken()));
+                assertEquals("Token no encontrado", exception.getMessage());
+                assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        }
 
-    @Test
-    void shouldFindByRefreshToken() {
-        when(iAuthenticationTokensRepository.findByRefreshToken(authenticationTokens.getRefreshToken()))
-                .thenReturn(Optional.of(authenticationTokens));
-        assertEquals(authenticationTokens,
-                authenticationTokensServiceImpl.findByRefreshToken(authenticationTokens.getRefreshToken()));
-    }
+        @Test
+        void shouldFindByRefreshToken() {
+                when(iAuthenticationTokensRepository.findByRefreshToken(authenticationTokens.getRefreshToken()))
+                                .thenReturn(Optional.of(authenticationTokens));
+                assertEquals(authenticationTokens,
+                                authenticationTokensServiceImpl
+                                                .findByRefreshToken(authenticationTokens.getRefreshToken()));
+        }
 
-    @Test
-    void shouldExceptionWhenFindByRefreshTokenReturnEmpty() {
-        BussinesException exception = assertThrows(BussinesException.class,
-                () -> authenticationTokensServiceImpl.findByRefreshToken(authenticationTokens.getRefreshToken()));
-        assertEquals("Token no encontrado", exception.getMessage());
-<<<<<<< Updated upstream
-=======
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
->>>>>>> Stashed changes
-    }
+        @Test
+        void shouldExceptionWhenFindByRefreshTokenReturnEmpty() {
+                BussinesException exception = assertThrows(BussinesException.class,
+                                () -> authenticationTokensServiceImpl
+                                                .findByRefreshToken(authenticationTokens.getRefreshToken()));
+                assertEquals("Token no encontrado", exception.getMessage());
+                assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        }
 }
