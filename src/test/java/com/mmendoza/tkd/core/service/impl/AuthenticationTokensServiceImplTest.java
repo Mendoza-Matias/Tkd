@@ -12,6 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+<<<<<<< Updated upstream
+=======
+import org.springframework.http.HttpStatus;
+>>>>>>> Stashed changes
 
 import com.mmendoza.tkd.core.exception.BussinesException;
 import com.mmendoza.tkd.core.model.AuthenticationTokens;
@@ -54,6 +58,10 @@ public class AuthenticationTokensServiceImplTest {
         BussinesException exception = assertThrows(BussinesException.class,
                 () -> authenticationTokensServiceImpl.invalidate(authenticationTokens.getRefreshToken()));
         assertEquals("Token no encontrado", exception.getMessage());
+<<<<<<< Updated upstream
+=======
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+>>>>>>> Stashed changes
     }
 
     @Test
@@ -69,5 +77,9 @@ public class AuthenticationTokensServiceImplTest {
         BussinesException exception = assertThrows(BussinesException.class,
                 () -> authenticationTokensServiceImpl.findByRefreshToken(authenticationTokens.getRefreshToken()));
         assertEquals("Token no encontrado", exception.getMessage());
+<<<<<<< Updated upstream
+=======
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+>>>>>>> Stashed changes
     }
 }

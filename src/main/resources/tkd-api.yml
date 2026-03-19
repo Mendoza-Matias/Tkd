@@ -69,6 +69,51 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+    get:
+      tags:
+        - Student
+      summary: GetAllStudents
+      operationId: getAllStudents
+      description: Get all students
+      responses:
+        "200":
+          description: Students retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student_response"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
   /discipline:
     get:
       tags:
@@ -443,7 +488,20 @@ components:
         refresh_token:
           type: string
     login_response:
+<<<<<<< Updated upstream
       type: object
+      properties:
+        jwt:
+          type: string
+        refresh_token:
+          type: string
+    register_student_request:
+=======
+>>>>>>> Stashed changes
+      type: object
+      required:
+        - name
+        - email
       properties:
         jwt:
           type: string
@@ -452,14 +510,31 @@ components:
     register_student_request:
       type: object
       required:
-        - name
+        - full_name
         - email
       properties:
-        name:
+        full_name:
           type: string
         email:
           type: string
           format: email
+<<<<<<< Updated upstream
+=======
+        phone:
+          type: string
+    student_response:
+      type: object
+      properties:
+        id:
+          type: integer
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+>>>>>>> Stashed changes
     discpline_response:
       type: object
       properties:

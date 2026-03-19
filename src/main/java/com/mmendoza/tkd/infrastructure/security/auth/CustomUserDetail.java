@@ -30,7 +30,11 @@ public class CustomUserDetail implements UserDetails {
 
     @Override
     public String getUsername() {
+<<<<<<< Updated upstream
         return user.getUsername();
+=======
+        return user.getEmail();
+>>>>>>> Stashed changes
     }
 
     @Override
