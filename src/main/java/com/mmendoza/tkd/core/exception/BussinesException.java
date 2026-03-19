@@ -1,0 +1,17 @@
+package com.mmendoza.tkd.core.exception;
+
+import org.springframework.http.HttpStatus;
+
+public class BussinesException extends RuntimeException {
+
+    private final HttpStatus status;
+
+    public BussinesException(String message, HttpStatus status) {
+        super(message);
+        this.status = status;
+    }
+
+    public HttpStatus getStatus() {
+        return status;
+    }
+}

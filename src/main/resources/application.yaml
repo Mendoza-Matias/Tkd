@@ -1,3 +1,18 @@
 spring:
   application:
     name: tkd
+  datasource:
+    url: jdbc:h2:mem:tkd
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+jwt:
+  secret: ${JWT_SECRET:YWx0YWNsYXZlc3VwZXJsYXJnYXBhcmFjZW50cm90a2Q=}
+  expiration: ${JWT_EXPIRATION:900000}
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION:259200000}
